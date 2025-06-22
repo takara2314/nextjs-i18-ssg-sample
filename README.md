@@ -1,6 +1,6 @@
 # Next.js 15 + i18next SSG サンプル
 
-このプロジェクトは、Next.js 15のApp Routerとi18nextを使用した**静的サイト生成（SSG）**での国際化（i18n）実装のサンプルです。
+このプロジェクトは、Next.js 15のApp Routerとi18nextを使用した **静的サイト生成（SSG）** での国際化（i18n）実装のサンプルです。
 
 [Locize.comの記事](https://www.locize.com/blog/i18n-next-app-router)に基づいて、最新のNext.js App Routerでの国際化のベストプラクティスを実装しています。
 
@@ -84,12 +84,22 @@ npx serve out
 
 ```
 app/
-├── i18n/                    # 国際化設定
-│   ├── settings.ts          # i18n基本設定
-│   ├── i18next.ts          # i18next初期化
-│   ├── index.ts            # サーバーサイドヘルパー
-│   ├── client.ts           # クライアントサイドヘルパー
-│   └── locales/            # 翻訳ファイル
+├── components/             # 共通コンポーネント
+│   ├── buttons/           # ボタンコンポーネント
+│   │   ├── PrimaryBtn.tsx # プライマリボタン
+│   │   └── SecondaryBtn.tsx # セカンダリボタン
+│   ├── home/              # ホームページコンポーネント
+│   │   └── Page.tsx       # ホームページ実装
+│   ├── foo/               # Fooページコンポーネント
+│   │   └── Page.tsx       # Fooページ実装
+│   └── events/            # イベントページコンポーネント
+│       └── Page.tsx       # イベントページ実装
+├── i18n/                  # 国際化設定
+│   ├── settings.ts        # i18n基本設定
+│   ├── i18next.ts        # i18next初期化
+│   ├── index.ts          # サーバーサイドヘルパー
+│   ├── client.ts         # クライアントサイドヘルパー
+│   └── locales/          # 翻訳ファイル
 │       ├── ja/
 │       │   ├── home.json
 │       │   ├── foo.json
@@ -98,15 +108,19 @@ app/
 │           ├── home.json
 │           ├── foo.json
 │           └── events.json
-├── [lang]/                 # 言語別ページ
+├── [lang]/               # 言語別ページ（薄いラッパー）
 │   ├── layout.tsx
-│   ├── page.tsx
+│   ├── page.tsx          # 共通コンポーネントを使用
 │   ├── foo/
+│   │   └── page.tsx      # 共通コンポーネントを使用
 │   └── events/[eventName]/
-├── events/[eventName]/     # ルートイベントページ
-├── foo/                    # ルートFooページ
-├── layout.tsx              # ルートレイアウト
-└── page.tsx                # ルートページ
+│       └── page.tsx      # 共通コンポーネントを使用
+├── events/[eventName]/   # ルートイベントページ（薄いラッパー）
+│   └── page.tsx          # 共通コンポーネントを使用
+├── foo/                  # ルートFooページ（薄いラッパー）
+│   └── page.tsx          # 共通コンポーネントを使用
+├── layout.tsx            # ルートレイアウト
+└── page.tsx              # ルートページ（薄いラッパー）
 ```
 
 ## 🔧 設定ファイル
@@ -131,11 +145,29 @@ const nextConfig: NextConfig = {
 
 ## 💡 実装のポイント
 
-### 1. SSG対応
+### 1. コンポーネント分離アーキテクチャ
+- **共通コンポーネント**: `app/components/`に実際の実装を配置
+- **薄いラッパー**: 各ページは共通コンポーネントを呼び出すだけの薄いラッパー
+- **App Routerらしい構造**: ページごとにディレクトリを分けた直感的な設計
+- **YAGNIの原則**: 重複コードを排除し、保守性を向上
+
+### 2. SSG対応
 - `headers()`の使用を避け、言語パラメーターを直接受け取る設計
 - 静的生成に適した`generateStaticParams()`の活用
 
-### 2. 翻訳の使用方法
+### 3. 共通コンポーネントの使用方法
+
+**ページラッパーの例:**
+```typescript
+// app/page.tsx (薄いラッパー)
+import { HomePageComponent } from './components/home/Page'
+
+export default async function Home() {
+  return <HomePageComponent lang="ja" />;
+}
+```
+
+### 4. 翻訳の使用方法
 
 **サーバーサイド:**
 ```typescript
@@ -153,7 +185,7 @@ const { t } = useT('home')
 console.log(t('title')) // => "Create Next App"
 ```
 
-### 3. 動的ルーティング
+### 5. 動的ルーティング
 ```typescript
 // app/events/[eventName]/page.tsx
 export async function generateStaticParams() {
@@ -174,11 +206,3 @@ export async function generateStaticParams() {
 ## 📝 ライセンス
 
 MIT License
-
-## 🤝 コントリビューション
-
-プルリクエストやイシューの報告を歓迎します！
-
-## 📞 サポート
-
-質問や問題がある場合は、GitHubのIssuesでお気軽にお聞かせください。
