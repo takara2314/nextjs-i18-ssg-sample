@@ -1,8 +1,14 @@
 import Image from "next/image";
-import { getT } from './i18n'
+import { getT } from '../i18n'
+import { languages } from '../i18n/settings'
 
-export default async function Home() {
-  const { t } = await getT('ja', 'home')
+export async function generateStaticParams() {
+  return languages.map((lng) => ({ lang: lng }))
+}
+
+export default async function LangHome({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const { t } = await getT(lang, 'home')
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -20,7 +26,7 @@ export default async function Home() {
             {t('get-started', { file: 'app/page.tsx' })}
           </li>
           <li className="tracking-[-.01em]">
-            {t('save-changes', { language: 'ja' })}
+            {t('save-changes', { language: lang })}
           </li>
         </ol>
 
@@ -50,7 +56,7 @@ export default async function Home() {
           </a>
           <a
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto"
-            href="/foo"
+            href={`/${lang}/foo`}
           >
             {t('to-foo-page')}
           </a>
@@ -59,13 +65,13 @@ export default async function Home() {
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto"
-            href="/events/furry-convention"
+            href={`/${lang}/events/furry-convention`}
           >
             {t('to-furry-convention')}
           </a>
           <a
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto"
-            href="/events/art-contest"
+            href={`/${lang}/events/art-contest`}
           >
             {t('to-art-contest')}
           </a>

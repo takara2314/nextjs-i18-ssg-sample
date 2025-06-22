@@ -1,0 +1,24 @@
+{
+  "title": "イベント: {{eventName}}",
+  "description": "{{eventName}}イベントの詳細ページです",
+  "heading": "{{eventName}}へようこそ",
+  "furry-convention": {
+    "name": "ファーリーコンベンション",
+    "description": "ファーリーファンダムの祭典です。コスプレ、アート、音楽などを楽しめます。",
+    "date": "2024年12月15日 - 17日",
+    "location": "東京ビッグサイト",
+    "details": "年に一度のファーリーコンベンションで、世界中からファンが集まります。"
+  },
+  "art-contest": {
+    "name": "アートコンテスト",
+    "description": "創造性を競うアートコンテストです。様々なカテゴリーで作品を募集しています。",
+    "date": "2024年11月1日 - 30日",
+    "location": "オンライン開催",
+    "details": "デジタルアート、伝統的なアート、3Dアートなど、様々な分野で作品を募集中です。"
+  },
+  "event-details": "イベント詳細",
+  "date": "日程",
+  "location": "場所",
+  "back-to-home": "ホームに戻る",
+  "event-not-found": "指定されたイベントが見つかりません"
+} 

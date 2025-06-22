@@ -1,0 +1,24 @@
+{
+  "title": "Event: {{eventName}}",
+  "description": "Details page for {{eventName}} event",
+  "heading": "Welcome to {{eventName}}",
+  "furry-convention": {
+    "name": "Furry Convention",
+    "description": "A celebration of furry fandom featuring cosplay, art, music, and more.",
+    "date": "December 15-17, 2024",
+    "location": "Tokyo Big Sight",
+    "details": "Annual furry convention bringing together fans from around the world."
+  },
+  "art-contest": {
+    "name": "Art Contest",
+    "description": "A creative art contest with various categories for submissions.",
+    "date": "November 1-30, 2024",
+    "location": "Online Event",
+    "details": "We're accepting submissions in digital art, traditional art, 3D art, and more categories."
+  },
+  "event-details": "Event Details",
+  "date": "Date",
+  "location": "Location",
+  "back-to-home": "Back to Home",
+  "event-not-found": "The specified event was not found"
+} 
